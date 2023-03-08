@@ -68,16 +68,28 @@ class Api {
     }
   }
 
-// put method
+// update method
   static updateProduct(id, body) async {
     var url = Uri.parse("${baseUrl}update/$id");
 
-    final res = await http.put(url, body: body);
+    final res = await http.post(url, body: body);
 
     if (res.statusCode == 200) {
       print(jsonDecode(res.body));
     } else {
       print("Failed to update");
+    }
+  }
+
+  // delete method
+  static deleteProduct(id) async {
+    var url = Uri.parse("${baseUrl}delete/$id");
+
+    final res = await http.post(url);
+    if (res.statusCode == 204) {
+      print(jsonDecode(res.body));
+    } else {
+      print("Failed to delete");
     }
   }
 }

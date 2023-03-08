@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 
 // to use json data
@@ -11,10 +12,16 @@ app.use(express.urlencoded({
 
 const productData = [];
 
-const port = 9916;
-app.listen(port, ()=> {
-    console.log('Server is running on port', port);
-})
+// DB connection
+mongoose.connect("mongodb+srv://SFariq:mslk123@cluster0.hvkvbbl.mongodb.net/?retryWrites=true&w=majority", {
+    'useUnifiedTopology' : true, 'useNewUrlParse': true
+}, (req, res) =>{
+    console.log("Status", "Conntected to DB");
+});
+
+// 
+
+
 
 // post api
 
@@ -78,7 +85,7 @@ app.get('/api/getproducts', (req, res)=>{
    2. PATCH- Patch method only update the specific element as per the requirement*/
 
 //    Put method
-app.put('/api/update/:id ', (req, res)=>{
+app.post('/api/update/:id ', (req, res)=>{
 
     // multipluying the id by 1 to make it an int
   let id = req.params.id *1;
@@ -97,8 +104,24 @@ res.status(200).send({
 })
 print(res);
 
+});
 
+app.post("/api/delete/:id", (req, res)=>{
+    let id = req.params.id*1;
+    let productTobeDetele = productData.find(p=>p.id === id);
+    let index = productData.indexOf(productTobeDetele);
 
+    productData.slice(index, 1);
 
+    res.status(204).send({
+    "status" : "Success",
+    "message": "Product Deleted"
+
+    })
 
 });
+
+const port = 9916;
+app.listen(port, ()=> {
+    console.log('Server is running on port', port);
+})

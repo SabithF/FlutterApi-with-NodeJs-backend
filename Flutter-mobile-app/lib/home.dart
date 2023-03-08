@@ -3,6 +3,7 @@ import 'package:flutter_node/Screens/read.dart';
 import 'package:flutter_node/Screens/update.dart';
 
 import 'Screens/create.dart';
+import 'Screens/delete.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,7 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const UpdateScreen())),
               child: Text('UPDATE')),
-          ElevatedButton(onPressed: () {}, child: Text('DELETE'))
+          ElevatedButton(
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const DeleteProduct())),
+              child: Text('DELETE'))
         ]));
   }
 }
